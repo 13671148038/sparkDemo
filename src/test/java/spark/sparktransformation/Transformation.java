@@ -61,7 +61,7 @@ public class Transformation {
                 collect();
     }
     /**
-     * flatMam的使用
+     * groupByKey的使用
      */
     @Test
     public void demo5(){
@@ -94,7 +94,7 @@ public class Transformation {
         });
     }
     /**
-     * reduceByKey的使用 通过key进行排序
+     * sortByKey的使用 通过key进行排序
      */
     @Test
     public void demo7(){
