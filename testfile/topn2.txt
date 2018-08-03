@@ -1,0 +1,10 @@
+class1 345
+class2 366
+class1 433
+class3 234
+class1 543
+class2 322
+class3 789
+class2 387
+class1 2356
+class3 345

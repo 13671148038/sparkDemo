@@ -8,10 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import scala.Tuple2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * 去除文本中数字最大的前三个
@@ -29,7 +26,7 @@ public class TopN {
     }
 
     /**
-     * 取除最大的前三个数
+     * 取出最大的前三个数
      */
     @Test
     public void demo1(){
@@ -41,33 +38,48 @@ public class TopN {
                 });
     }
     /**
-     * 取除每个班级成绩最大的前三个
+     * 取出每个班级成绩最大的前三个
      */
     @Test
     public void demo2(){
-        JavaRDD<String> lins = sc.textFile("d:/topn2.txt");
-        /*lins.mapToPair(c->{
+        JavaRDD<String> lins = sc.textFile("testfile/topn2.txt");
+        lins.mapToPair(c->{
             String[] s = c.split(" ");
-            return  new Tuple2<String,Integer>( s[0],Integer.valueOf( s[1]));
+            return new Tuple2<String,Integer>(s[0],Integer.valueOf(s[1]));
         }).
         groupByKey().mapToPair(c->{
-            List<Integer> top3 = new ArrayList<>();
-            Iterable<Integer> integers = c._2;
-            ArrayList<Integer> sdc = (ArrayList<Integer>)integers;
-            Collections.sort(sdc);
-            int size = sdc.size();
-            int start = 0;
-            if(size>=3){
-                size=3;
-                start-=3;
+            Integer[] top3 = new Integer[3];
+            Iterator<Integer> iterator = c._2().iterator();
+            while (iterator.hasNext()){
+                Integer next = iterator.next();
+               if(top3[2]==null){
+                   for (int i=0;i<3;i++){
+                       if(top3[i]==null){
+                           top3[i]=next;
+                           break;
+                       }
+                   }
+               }else{
+                   Integer min = top3[0];
+                   Integer index = 0;
+                   for (int j =0;j<3;j++){
+                       if(min>top3[j]){
+                           min=top3[j];
+                           index=j;
+                       }
+                   if(next>min){
+                       top3[index]=next;
+                   }
+                   }
+               }
             }
-            for (int i=size-1;i>start;i--){
-                top3.add(sdc.get(i));
-            }
-            return new Tuple2<String,List<Integer>>(c._1,top3);
-        }).foreach(c->
-                System.out.println(c)
-                );*/
-        ;
+            Arrays.sort(top3);
+            return new Tuple2<String,Integer[]>(c._1,top3);
+        }).foreach(c-> {
+                System.out.print(c._1);
+                System.out.print(c._2[0]+" ");
+                System.out.print(c._2[1]+" ");
+                System.out.println(c._2[2]); }
+        );
     }
 }
