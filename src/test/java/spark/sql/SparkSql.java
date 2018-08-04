@@ -1,4 +1,4 @@
-package spark;
+package spark.sql;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
@@ -30,7 +30,7 @@ public class SparkSql {
     //json
     @Test
     public void demo1(){
-        Dataset<Row> json = sparkSession.read().json("E:/people.json");
+        Dataset<Row> json = sparkSession.read().json("testfile/json/people.json");
         json.show();
         json.printSchema();
         json.select("name").show();
