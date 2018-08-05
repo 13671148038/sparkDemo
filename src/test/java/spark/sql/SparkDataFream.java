@@ -7,6 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  * sparkSQL测试
  */
@@ -24,6 +26,7 @@ public class SparkDataFream {
 
     /**
      * 基本的石sql 语句
+     * 读取sql文件
      */
     @Test
     public void demo1(){
@@ -40,6 +43,23 @@ public class SparkDataFream {
         people.filter(new Column("age").gt(40)).show();
         //根据某一列进行分组然后聚合
         people.groupBy("age").count().show();
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void demo2(){
+        Dataset<Row> parquet = sparkSession.read().parquet("testfile/parquet/users.parquet");
+        //创建中间表
+        parquet.createOrReplaceTempView("parquet");
+        //查询name
+        Dataset<Row> select_name_from_parquet = sparkSession.sql("select name from parquet");
+        //转换成list
+        List<String> collect = select_name_from_parquet.javaRDD().map(c -> c.getString(0)).collect();
+        collect.forEach(c->{
+            System.out.println(c);
+        });
     }
 
 }
