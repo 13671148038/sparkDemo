@@ -43,7 +43,7 @@ public class hadoopDemo {
     //上传文件
     @Test
     public void uploadFile()throws Exception{
-        fileSystem.copyFromLocalFile(false,true,new Path("D:/logs/test2.log"), new Path(homeDirectory + "/logs"));
+        fileSystem.copyFromLocalFile(false,true,new Path("D:/logs/test222.log"), new Path(homeDirectory + "/logs"));
         //遍历
         bianli(homeDirectory);
     }
@@ -56,6 +56,13 @@ public class hadoopDemo {
     @Test
     public void remove() throws Exception{
         fileSystem.deleteOnExit(new Path("hdfs://192.168.86.129:9000/user/MyPC/logs/counts.txt"));
+    }
+    //重命名
+    @Test
+    public void rename() throws Exception{
+        boolean rename = fileSystem.rename(new Path(homeDirectory + "/logs/test2.log"), new Path(homeDirectory + "/logs/test1.log"));
+        System.out.println(rename);
+        bianli(new Path(homeDirectory + "/logs"));
     }
 
     @Test

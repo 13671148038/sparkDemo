@@ -11,10 +11,10 @@ import java.util.List;
  * Created by MyPC on 2018/8/1.
  */
 public class WordCount {
-    public void main(String[] args){
-        //        System.setProperty("hadoop.home.dir","D:/tool/dcp/hadoop/hadoop-2.7.4");
-//        SparkConf sparkConf = new SparkConf().setMaster("local").setAppName("wordCount");
-        SparkConf sparkConf = new SparkConf().setAppName("wordCount");
+    public static void main(String[] args){
+        System.setProperty("hadoop.home.dir","D:/tool/dcp/hadoop/hadoop-2.7.4");
+        SparkConf sparkConf = new SparkConf().setMaster("local").setAppName("wordCount");
+//        SparkConf sparkConf = new SparkConf().setAppName("wordCount");
 
         JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
         JavaRDD<String> stringJavaRDD = sparkContext.textFile("hdfs://192.168.86.129:9000/user/MyPC/logs/test2.log", 2);

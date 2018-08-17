@@ -22,7 +22,7 @@ public class SchemaMerging {
     public void bef(){
         sparkSession=SparkSession.builder()
                 .master("local")
-                .appName("ScjemaMerging")
+                .appName("SchemaMerging")
                 .config("spark.sql.warehouse.dir", "C:/Users/zhush/Desktop/spark-warehouse")
                 .getOrCreate();
     }
